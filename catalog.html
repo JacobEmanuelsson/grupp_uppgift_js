@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- noUiSlider: library for the price slider with two handles (CSS + JS from CDN) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nouislider@15.7.1/dist/nouislider.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/nouislider@15.7.1/dist/nouislider.min.js"></script>
+
+    <script src="catalog.js" defer></script>
+    <link rel="stylesheet" href="catalog.css">
+</head>
+<body>
+
+    <header>
+        <button id="favorites-button" type="button">Favorites</button>
+    </header>
+
+    <main>
+        <form id="search-form">
+            <input type="text" name="search-product" id="search-product" placeholder="Search products...">
+
+            <select name="filter-category" id="filter-category">
+
+            </select>
+
+            <select name="filter-rating" id="filter-rating">
+                
+            </select>
+
+            <select name="filter-availability" id="filter-availability">
+
+            </select>
+
+            <div id="price-range">
+                <span id="price-label"></span>
+                <!-- noUiSlider builds the slider inside this empty div -->
+                <div id="price-slider"></div>
+                <!-- Hidden inputs that hold the slider values so FormData can read them -->
+                <input type="hidden" name="min-price" id="min-price">
+                <input type="hidden" name="max-price" id="max-price">
+            </div>
+
+            <select name="sort-product" id="sort-product">
+
+            </select>
+
+            <button type="submit">Search</button>
+        </form>
+        <div id="product-container">
+
+        </div>
+        <button id="more-products">
+            See more
+        </button>
+    </main>
+
+</body>
+</html>
