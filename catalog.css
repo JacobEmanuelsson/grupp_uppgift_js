@@ -1,0 +1,61 @@
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 20px;
+    background: #f4f4f4;
+}
+
+#search-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+#price-range {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+/* Price slider (noUiSlider styles it, we only set the size) */
+#price-slider {
+    width: 200px;
+    margin: 0 10px;
+}
+
+#product-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+}
+
+.product-card {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    position: relative;
+    cursor: pointer;
+}
+
+.favorite-button {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: crimson;
+    cursor: pointer;
+}
+
+.product-thumbnail {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: contain;
+}
+
+.product-card h3 {
+    margin-top: 0;
+}

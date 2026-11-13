@@ -11,6 +11,10 @@ const addToCartButton = document.querySelector("#addToCartButton");
 const addToFavoriteButton = document.querySelector("#addToFavoriteButton");
 const backButton = document.querySelector("#backButton");
 
+backButton.addEventListener("click", function() {
+    window.location.href = "catalog.html";
+});
+
 const product = products.find(function(item) {
     return item.id === productId;
 });
@@ -104,10 +108,6 @@ addToFavoriteButton.addEventListener("click", function() {
         alert("Product is already in favorites!");
     }
 
-});
-
-backButton.addEventListener("click", function() {
-    window.location.href = "index.html";
 });
 
 if (product) {

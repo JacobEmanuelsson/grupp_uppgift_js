@@ -73,7 +73,7 @@ function removeFavorite(productId) {
 
 
 backButton.addEventListener("click", function() {
-    window.location.href = "index.html";
+    window.location.href = "catalog.html";
 });
 
 
