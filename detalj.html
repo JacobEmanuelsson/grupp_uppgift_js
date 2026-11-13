@@ -1,0 +1,38 @@
+
+
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produktdetaljer</title>
+    <link rel="stylesheet" href="detalj.css">
+    <script src="detalj.js" defer></script>
+</head>
+<body>
+
+    <header>
+        <h1>Product Details</h1>
+        <button id="backButton" type="button">Back to products</button>
+    </header>
+
+    <main>
+
+        <p id="loadingMessage" role="status" aria-live="polite">
+            Loading product...
+        </p>
+
+        <p id="errorMessage" role="alert"></p>
+
+        <section
+            id="productContainer"
+            class="product-container"
+            aria-label="Product information"
+        >
+        </section>
+
+    </main>
+
+</body>
+</html>
+
