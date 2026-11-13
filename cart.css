@@ -1,0 +1,39 @@
+* {
+box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: beige;
+    color: black;
+    font-family: system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+a {
+    color: inherit;
+}
+
+
+a:focus-visible {
+    outline: 3px solid darkslategray;
+    outline-offset: 2px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 5;
+    background: white;
+    border-bottom: 1px solid gainsboro;
+
+}
+
+header > a {
+    text-decoration: none;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    color: darkslategray;
+}
