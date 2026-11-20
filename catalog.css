@@ -276,21 +276,6 @@ h1 em {
     gap: 10px;
 }
 
-.dialog-buttons button {
-    padding: 8px 22px;
-    border-width: 1px;
-    border-style: solid;
-    border-color: var(--color-green);
-    background: transparent;
-    color: var(--color-green);
-    border-radius: 2px;
-}
-
-#submit-add-product {
-    background: var(--color-green);
-    color: white;
-}
-
 /* Responsive layout: tablet */
 
 @media (max-width: 1000px) {
