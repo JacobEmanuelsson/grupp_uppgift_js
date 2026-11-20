@@ -1,80 +1,111 @@
 
+let products = JSON.parse(sessionStorage.getItem("products")) || [];
 
-let favorites = JSON.parse(sessionStorage.getItem("favorites")) || [];
+const favoritesContainer = document.getElementById("favorites-container");
+const favoritesMessage = document.getElementById("favorites-message");
+const favoriteCount = document.getElementById("favorite-count");
 
+function saveProducts() {
+    sessionStorage.setItem("products", JSON.stringify(products));
+}
 
-const favoritesContainer = document.querySelector("#favoritesContainer");
-const emptyMessage = document.querySelector("#emptyMessage");
-const backButton = document.querySelector("#backButton");
+function showMessage(text) {
+    favoritesMessage.textContent = text;
+    favoritesMessage.hidden = text === "";
+}
 
+function getFavorites() {
+    return products.filter(function(product) {
+        return product.favorite === true;
+    });
+}
 
 function renderFavorites() {
-
     favoritesContainer.innerHTML = "";
 
-    if (favorites.length === 0) {
+    const favoriteProducts = getFavorites();
 
-        emptyMessage.textContent = "Your favorites list is empty.";
+    favoriteCount.textContent =
+        favoriteProducts.length + " products";
 
+    if (favoriteProducts.length === 0) {
+        showMessage("Your favorites list is empty. Explore the collection to find something you love.");
         return;
-
     }
 
-    emptyMessage.textContent = "";
+    showMessage("");
 
-    favorites.forEach(function(product) {
+    favoriteProducts.forEach(function(product) {
 
-        const productCard = document.createElement("article");
+        const card = document.createElement("div");
+        card.classList.add("favorite-card");
 
-        productCard.classList.add("favorite-card");
+        card.innerHTML = `
+            <img class="favorite-thumbnail" alt="">
 
-        productCard.innerHTML = `
-            <img src="${product.thumbnail}" alt="${product.title}">
+            <h3 class="product-title"></h3>
 
-            <h3>${product.title}</h3>
+            <p class="product-description"></p>
 
-            <p>Price: $${product.price.toFixed(2)}</p>
+            <p class="product-price"></p>
 
-            <a href="detalj.html?id=${product.id}">
-                View product
-            </a>
-
-            <button class="removeButton">
-                Remove favorite
+            <button class="remove-favorite-button" type="button">
+                ♥ Remove from favorites
             </button>
         `;
 
-        favoritesContainer.appendChild(productCard);
+        const image = card.querySelector(".favorite-thumbnail");
 
-        const removeButton = productCard.querySelector(".removeButton");
+        image.src = product.thumbnail;
+        image.alt = product.title;
+        image.loading = "lazy";
 
-        removeButton.addEventListener("click", function() {
-            removeFavorite(product.id);
+        card.querySelector(".product-title").textContent =
+            product.title;
+
+        card.querySelector(".product-description").textContent =
+            product.description;
+
+        card.querySelector(".product-price").textContent =
+            "$" + Number(product.price).toFixed(2);
+
+        const removeButton =
+            card.querySelector(".remove-favorite-button");
+
+        removeButton.addEventListener("click", function(event) {
+
+            event.stopPropagation();
+
+            product.favorite = false;
+
+            saveProducts();
+
+            renderFavorites();
         });
 
-    });
+        card.addEventListener("click", function() {
+            window.location.href = `detalj.html?id=${product.id}`;
+        });
 
+        card.tabIndex = 0;
+
+        card.setAttribute("role", "link");
+
+        card.setAttribute(
+            "aria-label",
+            "View " + product.title
+        );
+
+        card.addEventListener("keydown", function(event) {
+            if (event.target === card && event.key === "Enter") {
+                window.location.href = `detalj.html?id=${product.id}`;
+            }
+        });
+
+        favoritesContainer.append(card);
+    });
 }
 
 
-function removeFavorite(productId) {
-
-    favorites = favorites.filter(function(product) {
-        return product.id !== productId;
-    });
-
-   
-    sessionStorage.setItem("favorites", JSON.stringify(favorites));
-
-   
-    renderFavorites();
-
-}
-
-
-backButton.addEventListener("click", function() {
-    window.location.href = "catalog.html";
-});
-
-
+// Starta sidan
 renderFavorites();

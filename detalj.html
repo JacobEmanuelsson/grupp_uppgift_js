@@ -1,38 +1,87 @@
-
-
 <!DOCTYPE html>
 <html lang="sv">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Produktdetaljer</title>
+
+    <title>Product Details</title>
+
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="detalj.css">
+
     <script src="detalj.js" defer></script>
 </head>
+
 <body>
 
-    <header>
-        <h1>Product Details</h1>
-        <button id="backButton" type="button">Back to products</button>
-    </header>
+    
+<header class="site-header">
+    <div class="site-header-inner">
 
-    <main>
+        <a class="site-brand" href="catalog.html">
+            Super Goods
+            <span>The place with everything</span>
+        </a>
 
-        <p id="loadingMessage" role="status" aria-live="polite">
-            Loading product...
-        </p>
+        <nav class="site-nav" aria-label="Main navigation">
 
-        <p id="errorMessage" role="alert"></p>
+            <a href="catalog.html">
+                Shop
+            </a>
+
+            <a href="favorites.html">
+                ♡ <span>Favorites</span>
+            </a>
+
+            <a href="cart.html">
+                Bag
+            </a>
+
+        </nav>
+
+    </div>
+</header>
+
+<div class="announcement">
+    Complimentary delivery on orders over $100
+</div>
+
+
+    <main class="detail-main">
+
+        <section class="catalog-hero detail-hero">
+
+            <div class="hero-copy">
+                <p class="eyebrow">PRODUCT COLLECTION</p>
+
+                <h1>
+                    Product <em>Details</em>
+                </h1>
+
+                <p class="hero-description">
+                    Explore product information, check availability
+                    and manage your selected product.
+                </p>
+
+            </div>
+
+            <div class="hero-image-field"></div>
+
+        </section>
+
+        <p id="loadingMessage" class="status-message"
+           role="status" aria-live="polite" hidden></p>
+
+        <p id="errorMessage" class="error-message"
+           role="alert"></p>
 
         <section
             id="productContainer"
             class="product-container"
-            aria-label="Product information"
-        >
+            aria-label="Product information">
         </section>
 
     </main>
 
 </body>
 </html>
-
