@@ -4,9 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shop the collection — Field / Form</title>
-    <!-- noUiSlider: library for the price slider with two handles (CSS + JS from CDN) -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nouislider@15.7.1/dist/nouislider.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/nouislider@15.7.1/dist/nouislider.min.js"></script>
 
     <script src="catalog.js" defer></script>
     <link rel="stylesheet" href="style.css">
@@ -105,15 +102,6 @@
 
             </select></label>
 
-            <div id="price-range">
-                <span>Price</span>
-                <span id="price-label"></span>
-                <!-- noUiSlider builds the slider inside this empty div -->
-                <div id="price-slider"></div>
-                <!-- Hidden inputs that hold the slider values so FormData can read them -->
-                <input type="hidden" name="min-price" id="min-price">
-                <input type="hidden" name="max-price" id="max-price">
-            </div>
 
             <label class="sort-field">Sort by
             <select class="form-control" name="sort-product" id="sort-product">
