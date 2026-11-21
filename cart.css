@@ -37,3 +37,17 @@ header > a {
     letter-spacing: 0.12em;
     color: darkslategray;
 }
+
+
+nav {
+  display: flex;
+  gap: 32px;
+}
+
+nav a {
+  text-decoration: none;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}

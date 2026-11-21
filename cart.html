@@ -3,55 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your products - Field / Form</title>
+    <title>Your products - Super Goods</title>
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="cart.css">
 </head>
 <body>
-    <header>
-        <a href="index.html">FIELD / FORM</a>
-        <nav aria-label="main">
-            <a href="catalog.html">Shop</a>
-            <a href="favorites.html">Favorites</a>
-            <a href="cart.html">Products <span id="bag-count">(0)</span></a>
-        </nav>
+    <header class="site-header">
+        <div class="site-header-inner">
+            <a class="site-brand" href="catalog.html">
+                Super Goods
+                <span>The place with everything</span>
+            </a>
+            <nav class="site-nav" aria-label="Main navigation">
+                <a href="catalog.html">Shop</a>
+                <a href="favorites.html">♡ <span>Favorites</span></a>
+                <a href="cart.html" class="is-current" aria-current="page">Bag</a>
+            </nav>
+        </div>
     </header>
-    <main id="main">
+    <div class="announcement">Complimentary delivery on orders over $100</div>
+
+    <main id="main" class="page-container">
         <h1>Your products</h1>
         <p id="cart-count"></p>
+        <p id="cart-message" role="status" aria-live="polite" hidden></p>
+
         <div class="cart-layout">
             <section aria-label="Items in your bag">
-               <ul id="cart-list"></ul>
-        <a href="catalog.html">Continue shopping</a>
-
+                <ul id="cart-list"></ul>
+                <a href="catalog.html">Continue shopping</a>
             </section>
-            <aside aria-labelledby="summary-title">
-                <h2 id="summary-title">order summary</summary></h2>
+
+            <aside id="cart-summary" aria-labelledby="summary-title">
+                <h2 id="summary-title">Order summary</h2>
                 <dl>
                     <div>
-                        <dt>subtotal</dt>
+                        <dt>Subtotal</dt>
                         <dd id="subtotal"></dd>
-
                     </div>
                     <div>
                         <dt>Shipping</dt>
-                        <dd id="Shipping"></dd>
+                        <dd id="shipping"></dd>
                     </div>
                     <div>
                         <dt>Total</dt>
-                        <dd id="Total"></dd>
+                        <dd id="total"></dd>
                     </div>
-
                 </dl>
-
-
-
-
-                <a href="checkout.html"Continue to checkout></a>
+                <a class="primary-button" href="checkout.html">Continue to checkout</a>
             </aside>
         </div>
     </main>
+
+    <footer class="site-footer"><p>&copy; 2026 Super Goods AB</p></footer>
+
     <script src="shared.js"></script>
     <script src="cart.js"></script>
-
 </body>
 </html>
