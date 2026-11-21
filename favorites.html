@@ -1,34 +1,96 @@
 
 <!DOCTYPE html>
-<html lang="sv">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Favorites</title>
-    <link rel="stylesheet" href="favoriter.css">
-    <script src="favoriter.js" defer></script>
+
+    <title>Favorites — Super Goods</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="favorites.css">
+
+    <script src="favorites.js" defer></script>
 </head>
+
 <body>
 
-    <header>
-        <h1>My Favorites</h1>
+    <header class="site-header">
+        <div class="site-header-inner">
 
-        <button id="backButton" type="button">
-            Back to products
-        </button>
+            <a class="site-brand" href="catalog.html">
+                Super Goods
+                <span>The place with everything</span>
+            </a>
+
+            <nav class="site-nav" aria-label="Main navigation">
+                <a href="catalog.html">Shop</a>
+
+                <a href="favorites.html" class="is-current"
+                   aria-current="page">
+                    ♡ <span>Favorites</span>
+                </a>
+
+                <a href="cart.html">Bag</a>
+            </nav>
+
+        </div>
     </header>
 
-    <main>
+    <div class="announcement">
+        Complimentary delivery on orders over $100
+    </div>
 
-        <h2>My Favorite Products</h2>
 
-        <p id="emptyMessage"></p>
+    <main class="page-container favorites-main">
 
-        <section id="favoritesContainer" class="favorites-container">
+        <section class="favorites-hero">
+
+            <div class="hero-copy">
+                <p class="eyebrow">YOUR COLLECTION / FAVORITES</p>
+
+                <h1>
+                    Your favorite
+                    <em>things.</em>
+                </h1>
+
+                <p class="hero-description">
+                    All the products you have saved in one place.
+                    Keep track of the things you love.
+                </p>
+
+                <a class="primary-button" href="catalog.html">
+                    Continue shopping
+                    <span aria-hidden="true">→</span>
+                </a>
+            </div>
+
+            <div class="hero-image-field" aria-hidden="true"></div>
+
+        </section>
+
+
+        <section class="favorites-section">
+
+            <div class="collection-heading">
+                <h2>Your favorites</h2>
+
+                <p id="favorite-count" aria-live="polite"></p>
+            </div>
+
+            <p id="favorites-message" role="status"
+               aria-live="polite" hidden></p>
+
+            <div id="favorites-container"></div>
 
         </section>
 
     </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 Super Goods AB</p>
+    </footer>
 
 </body>
 </html>

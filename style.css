@@ -1,0 +1,315 @@
+/* Shared design tokens. Load this stylesheet before page styles. */
+
+:root {
+    --color-paper: #f7f5ec;
+    --color-ink: #20352b;
+    --color-green: #345440;
+    --color-muted: #737b70;
+    --color-line: #e2e0d4;
+    --color-image: #ece5d5;
+    --font-body: Arial, Helvetica, sans-serif;
+    --font-display: Georgia, 'Times New Roman', serif;
+    --page-width: 1280px;
+}
+
+/* Base styles and accessibility */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 24px;
+}
+
+body {
+    margin: 0;
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+button,
+select {
+    cursor: pointer;
+}
+
+button:disabled {
+    cursor: wait;
+    opacity: .6;
+}
+
+:focus-visible {
+    outline: 2px solid var(--color-green);
+    outline-offset: 4px;
+}
+
+.is-hidden {
+    display: none !important;
+}
+
+
+/* Shared page width: add page-container to your main element. */
+
+.page-container,
+.site-footer {
+    width: 89%;
+    max-width: var(--page-width);
+    margin-inline: auto;
+}
+
+/* Shared headings */
+
+h1,
+h2 {
+    font-family: var(--font-display);
+    font-weight: 400;
+}
+
+h1 {
+    margin: 0;
+    font-size: clamp(34px, 3.05vw, 46px);
+    line-height: 1.22;
+    letter-spacing: -.9px;
+}
+
+h2 {
+    font-size: 25px;
+    margin: 0 0 16px;
+}
+
+/* Shared header */
+
+.site-header {
+    background: #fffffc;
+    color: var(--color-ink);
+    font-family: var(--font-body);
+}
+
+.site-header-inner {
+    max-width: var(--page-width);
+    margin: auto;
+    padding: 24px 0;
+    min-height: 84px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+/* Brand */
+
+.site-brand {
+    color: var(--color-green);
+    text-decoration: none;
+    font-size: 21px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+}
+
+.site-brand span {
+    display: block;
+    font-size: 10px;
+    font-weight: 400;
+    margin-top: 5px;
+    color: var(--color-muted);
+}
+
+/* Navigation */
+
+.site-nav {
+    display: flex;
+    align-items: center;
+    gap: 42px;
+}
+
+.site-nav a,
+.site-nav button {
+    font: 13px var(--font-body);
+    color: inherit;
+    background: none;
+    border-width: 0;
+    border-style: none;
+    padding: 8px 0;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.site-nav .is-current {
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: var(--color-green);
+}
+
+.site-nav a:hover,
+.site-nav button:hover {
+    color: var(--color-green);
+    text-decoration: underline;
+    text-underline-offset: 5px;
+}
+
+/* Responsive header: page gutters */
+
+@media (max-width: 1408px) {
+    .site-header-inner {
+        margin-inline: 5.5%;
+    }
+}
+
+/* Responsive header: mobile */
+
+@media (max-width: 600px) {
+    .site-header-inner {
+        min-height: 78px;
+        padding-block: 18px;
+        gap: 12px;
+    }
+
+    .site-brand {
+        font-size: 17px;
+    }
+
+    .site-brand span {
+        font-size: 8px;
+    }
+
+    .site-nav {
+        gap: 18px;
+    }
+
+    .site-nav a,
+    .site-nav button {
+        font-size: 12px;
+    }
+}
+
+/* Optional announcement bar */
+
+.announcement {
+    background: var(--color-green);
+    color: var(--color-paper);
+    text-align: center;
+    padding: 8px 20px;
+    font-size: 11px;
+    letter-spacing: .5px;
+}
+
+/* Buttons: use on a button or a link. */
+
+.primary-button {
+    background: var(--color-green);
+    border-width: 1px;
+    border-style: solid;
+    border-color: var(--color-green);
+    border-radius: 2px;
+    color: white;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    text-decoration: none;
+    padding: 12px 26px;
+    font-size: 13px;
+}
+
+.primary-button:hover {
+    background: var(--color-ink);
+}
+
+.secondary-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 26px;
+    background: transparent;
+    color: var(--color-green);
+    border-width: 1px;
+    border-style: solid;
+    border-color: var(--color-green);
+    border-radius: 2px;
+    font-size: 13px;
+    text-decoration: none;
+}
+
+.secondary-button:hover {
+    background: var(--color-image);
+}
+
+/* Forms: form-field wraps a label and its form-control. */
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    font-size: 12px;
+    min-width: 0;
+}
+
+.form-control {
+    width: 100%;
+    border-width: 1px;
+    border-style: solid;
+    border-color: var(--color-line);
+    border-radius: 2px;
+    background: #fffffc;
+    color: var(--color-ink);
+    padding: 10px 12px;
+    min-height: 40px;
+}
+
+.form-control::placeholder {
+    color: var(--color-muted);
+}
+
+/* Shared footer */
+
+.site-footer {
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-top-color: var(--color-line);
+    margin-top: 56px;
+    padding: 20px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.site-footer p {
+    color: var(--color-muted);
+    font-size: 11px;
+    margin: 0;
+    width: 100%;
+    text-align: center;
+}
+
+/* Shared typography on smaller screens */
+
+@media (max-width: 650px) {
+    h1 {
+        font-size: 36px;
+    }
+
+    h2 {
+        font-size: 22px;
+    }
+}
+
+/* Respect reduced-motion preferences on every page. */
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+}

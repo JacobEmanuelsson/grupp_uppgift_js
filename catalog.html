@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop the collection — Field / Form</title>
+    <!-- noUiSlider: library for the price slider with two handles (CSS + JS from CDN) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nouislider@15.7.1/dist/nouislider.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/nouislider@15.7.1/dist/nouislider.min.js"></script>
+
+    <script src="catalog.js" defer></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="catalog.css">
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="site-header-inner">
+            <a class="site-brand" href="catalog.html">Super Goods<span>The place with everything</span></a>
+            <nav class="site-nav" aria-label="Main navigation">
+                <a href="catalog.html" class="is-current" aria-current="page">Shop</a>
+                <button id="favorites-button" type="button">♡ <span>Favorites</span></button>
+                <a href="cart.html">Bag</a>
+            </nav>
+        </div>
+    </header>
+    <div class="announcement">Complimentary delivery on orders over $100</div>
+
+    <dialog id="add-product-dialog">
+        <form id="add-product-form" method="dialog">
+            <h2>New product</h2>
+
+            <label>
+                Title
+                <input class="form-control" type="text" name="title" required>
+            </label>
+
+            <label>
+                Description
+                <textarea class="form-control" name="description" rows="3" required></textarea>
+            </label>
+
+            <label>
+                Price
+                <input class="form-control" type="number" name="price" min="0" step="0.01" required>
+            </label>
+
+            <label>
+                Category
+                <input class="form-control" type="text" name="category" required>
+            </label>
+
+            <label>
+                Image URL
+                <input class="form-control" type="url" name="thumbnail">
+            </label>
+
+            <!-- Shows "Adding product..." or an error message -->
+            <p id="add-product-message" hidden></p>
+
+            <div class="dialog-buttons">
+                <button class="secondary-button" type="button" id="cancel-add-product">Cancel</button>
+                <button class="primary-button" type="submit" id="submit-add-product">Add</button>
+            </div>
+        </form>
+    </dialog>
+
+    <main class="page-container catalog-main">
+        <section class="catalog-hero" aria-labelledby="hero-title">
+            <div class="hero-copy">
+                <p class="eyebrow">DUMMYJSON STORE / <span id="hero-product-count">THE COLLECTION</span></p>
+                <h1 id="hero-title">Find your next<br><em>everyday essential.</em></h1>
+                <p class="hero-description">Beauty, fashion, home, tech and more. Browse a wide-ranging collection of sample products from DummyJSON.</p>
+                <a class="primary-button" href="#collection">Explore the collection <span aria-hidden="true">→</span></a>
+            </div>
+            <div class="hero-image-field" aria-hidden="true"></div>
+        </section>
+        <section id="collection" aria-labelledby="collection-title">
+        <div class="collection-heading">
+            <h2 id="collection-title">Browse all products</h2>
+            <p id="product-count" aria-live="polite"></p>
+        </div>
+        <div class="collection-tools"><p class="filter-heading">Filter products</p><button id="add-product-button" type="button">+ Add product</button></div>
+        <form id="search-form" role="search">
+            <label class="search-field">Search the collection
+            <input class="form-control" type="search" name="search-product" id="search-product" placeholder="Search products…"></label>
+
+            <label class="category-field">Category
+            <select class="form-control" name="filter-category" id="filter-category">
+
+            </select></label>
+
+            <label class="rating-field">Rating
+            <select class="form-control" name="filter-rating" id="filter-rating">
+                <option value="">Any rating</option>
+                <option value="4.5">4.5 stars &amp; up</option>
+                <option value="4">4 stars &amp; up</option>
+                <option value="3">3 stars &amp; up</option>
+                <option value="2">2 stars &amp; up</option>
+                <option value="1">1 star &amp; up</option>
+            </select></label>
+
+            <label class="availability-field">Availability
+            <select class="form-control" name="filter-availability" id="filter-availability">
+
+            </select></label>
+
+            <div id="price-range">
+                <span>Price</span>
+                <span id="price-label"></span>
+                <!-- noUiSlider builds the slider inside this empty div -->
+                <div id="price-slider"></div>
+                <!-- Hidden inputs that hold the slider values so FormData can read them -->
+                <input type="hidden" name="min-price" id="min-price">
+                <input type="hidden" name="max-price" id="max-price">
+            </div>
+
+            <label class="sort-field">Sort by
+            <select class="form-control" name="sort-product" id="sort-product">
+                <option value="">Featured</option>
+                <option value="price-asc">Price: low to high</option>
+                <option value="price-desc">Price: high to low</option>
+            </select></label>
+
+            <button class="primary-button search-button" type="submit">Search <span aria-hidden="true">→</span></button>
+        </form>
+        <div id="product-container">
+
+        </div>
+        <!-- Shows loading and error messages for the product fetches -->
+        <p id="catalog-message" role="status" hidden></p>
+        <nav id="page-navigation" class="page-navigation is-hidden" aria-label="Product pages" hidden></nav>
+        </section>
+    </main>
+    <footer class="site-footer"><p>&copy; 2026 Super Goods AB</p></footer>
+
+</body>
+</html>
