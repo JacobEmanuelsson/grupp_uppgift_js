@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Super Goods</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="cart.css">
+    <link rel="stylesheet" href="checkout.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="site-header-inner">
+            <a class="site-brand" href="catalog.html">
+                Super Goods
+                <span>The place with everything</span>
+            </a>
+            <nav class="site-nav" aria-label="Main navigation">
+                <a href="catalog.html">Shop</a>
+                <a href="favorites.html">♡ <span>Favorites</span></a>
+                <a href="cart.html">Bag</a>
+            </nav>
+        </div>
+    </header>
+    <div class="announcement">Complimentary delivery on orders over $100</div>
+
+    <main id="main" class="page-container">
+        <h1>Checkout</h1>
+        <p id="cart-count">Review your order. This is a simulated purchase, so no payment details are needed.</p>
+        <p id="cart-message" role="status" aria-live="polite" hidden></p>
+
+        <div class="cart-layout">
+            <section aria-label="Order review">
+                <ul id="cart-list"></ul>
+                <a class="back-link" href="cart.html">&larr; Back to your bag</a>
+            </section>
+
+            <aside id="cart-summary" aria-labelledby="summary-title" hidden>
+                <h2 id="summary-title">Order summary</h2>
+                <dl>
+                    <div>
+                        <dt>Subtotal</dt>
+                        <dd id="subtotal"></dd>
+                    </div>
+                    <div>
+                        <dt>Shipping</dt>
+                        <dd id="shipping"></dd>
+                    </div>
+                    <div>
+                        <dt>Total</dt>
+                        <dd id="total"></dd>
+                    </div>
+                </dl>
+                <button type="button" id="place-order" class="primary-button">Place order</button>
+                <p class="assurance">Secure checkout &bull; Easy returns</p>
+            </aside>
+        </div>
+    </main>
+
+    <footer class="site-footer"><p>&copy; 2026 Super Goods AB</p></footer>
+
+    <script src="cart-utils.js"></script>
+    <script src="checkout.js"></script>
+</body>
+</html>

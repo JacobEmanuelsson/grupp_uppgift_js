@@ -1,53 +1,210 @@
-* {
-box-sizing: border-box;
+.cart-layout {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 40px;
+    align-items: start;
+    margin-top: 24px;
 }
 
-body {
+#cart-count {
+    margin: 8px 0 0;
+    color: var(--color-muted);
+    font-size: 12px;
+}
+
+#cart-message {
+    padding: 28px 0;
+    color: var(--color-muted);
+}
+
+#cart-list {
+    list-style: none;
     margin: 0;
-    background: beige;
-    color: black;
-    font-family: system-ui, sans-serif;
+    padding: 0;
+    border-top: 1px solid var(--color-line);
+}
+
+.cart-item {
+    display: grid;
+    grid-template-columns: 104px 1fr auto auto;
+    gap: 20px;
+    align-items: start;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--color-line);
+}
+
+.cart-item-image {
+    width: 104px;
+    height: 104px;
+    padding: 8px;
+    object-fit: contain;
+    background: var(--color-image);
+    border-radius: 2px;
+}
+
+.cart-item-title {
+    margin: 0 0 4px;
     font-size: 15px;
-    line-height: 1.5;
 }
 
-a {
-    color: inherit;
+.cart-item-title a {
+    color: var(--color-ink);
+    text-decoration: none;
 }
 
-
-a:focus-visible {
-    outline: 3px solid darkslategray;
-    outline-offset: 2px;
+.cart-item-title a:hover {
+    text-decoration: underline;
 }
 
-header {
+.cart-item-category {
+    margin: 0 0 12px;
+    color: var(--color-muted);
+    font-size: 12px;
+    text-transform: capitalize;
+}
+
+.cart-item-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.link-button {
+    padding: 8px 0;
+    border: 0;
+    background: none;
+    color: var(--color-green);
+    font-size: 12px;
+}
+
+.link-button:hover {
+    text-decoration: underline;
+}
+
+.quantity-control {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid var(--color-line);
+    background: #fffffc;
+}
+
+.quantity-control button {
+    width: 40px;
+    height: 40px;
+    border: 0;
+    background: none;
+    color: var(--color-ink);
+    font-size: 16px;
+}
+
+.quantity-control button:hover:not(:disabled) {
+    background: var(--color-image);
+}
+
+.quantity-control button:disabled {
+    cursor: not-allowed;
+}
+
+.quantity-value {
+    min-width: 32px;
+    text-align: center;
+}
+
+.cart-item-price {
+    min-width: 80px;
+    margin: 0;
+    text-align: right;
+    font-weight: 600;
+}
+
+.back-link {
+    display: inline-block;
+    margin-top: 24px;
+    padding: 8px 0;
+    color: var(--color-green);
+    font-size: 13px;
+}
+
+#cart-summary {
+    padding: 28px;
+    border: 1px solid var(--color-line);
+    background: #fffffc;
+}
+
+#cart-summary h2 {
+    margin-bottom: 20px;
+}
+
+#cart-summary dl {
+    margin: 0;
+}
+
+#cart-summary dl div {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding: 20px 5;
-    background: white;
-    border-bottom: 1px solid gainsboro;
-
+    padding: 6px 0;
 }
 
-header > a {
-    text-decoration: none;
-    font-weight: 500;
-    letter-spacing: 0.12em;
-    color: darkslategray;
+#cart-summary dt {
+    color: var(--color-muted);
 }
 
-
-nav {
-  display: flex;
-  gap: 32px;
+#cart-summary dd {
+    margin: 0;
 }
 
-nav a {
-  text-decoration: none;
+#cart-summary dl div:last-child {
+    margin-top: 12px;
+    padding-top: 16px;
+    border-top: 1px solid var(--color-line);
+    font-weight: 600;
 }
 
-nav a:hover {
-  text-decoration: underline;
+#cart-summary .primary-button {
+    width: 100%;
+    margin-top: 24px;
+}
+
+.toast {
+    position: fixed;
+    left: 50%;
+    bottom: 24px;
+    margin: 0;
+    padding: 10px 24px;
+    transform: translateX(-50%);
+    background: var(--color-green);
+    color: white;
+    font-size: 12px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.toast.is-visible {
+    opacity: 1;
+}
+
+@media (max-width: 900px) {
+    .cart-layout {
+        grid-template-columns: 100%;
+    }
+}
+
+@media (max-width: 650px) {
+    .cart-item {
+        grid-template-columns: 80px 1fr;
+    }
+
+    .cart-item-image {
+        width: 80px;
+        height: 80px;
+    }
+
+    .quantity-control,
+    .cart-item-price {
+        grid-column: 2;
+    }
+
+    .cart-item-price {
+        text-align: left;
+    }
 }
