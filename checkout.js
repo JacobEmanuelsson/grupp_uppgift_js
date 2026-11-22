@@ -88,6 +88,7 @@ function placeOrder() {
 
         sessionStorage.setItem("lastOrder", JSON.stringify(order));
         sessionStorage.removeItem("cart");
+        updateBagCount();
         window.location.href = "order-complete.html";
     }, 1500);
 }

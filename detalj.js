@@ -1,4 +1,6 @@
 const API_URL = "https://dummyjson.com/products";
+// DummyJSON does not save new products, so API demos always use existing product 1.
+const DEMO_PRODUCT_ID = 1;
 const FAKE_DELAY = 1500;
 
 function wait(ms) {
@@ -265,6 +267,7 @@ function addToCart() {
     }
 
     sessionStorage.setItem("cart", JSON.stringify(cart));
+    updateBagCount();
 
     showActionMessage("cartMessage", "Product added to cart!");
 }
@@ -320,27 +323,25 @@ async function updateProduct(event) {
         showLoading("Updating product...");
         showError("");
 
-        if (!product.custom) {
-            await wait(FAKE_DELAY);
+        await wait(FAKE_DELAY);
 
-            const response = await fetch(`${API_URL}/${productId}`, {
-                method: "PATCH",
+        const response = await fetch(`${API_URL}/${DEMO_PRODUCT_ID}`, {
+            method: "PATCH",
 
-                headers: {
-                    "Content-Type": "application/json"
-                },
+            headers: {
+                "Content-Type": "application/json"
+            },
 
-                body: JSON.stringify(updatedData)
-            });
+            body: JSON.stringify(updatedData)
+        });
 
-            if (!response.ok) {
-                throw new Error(
-                    "Could not update product. Status: " + response.status
-                );
-            }
-
-            await response.json();
+        if (!response.ok) {
+            throw new Error(
+                "Could not update product. Status: " + response.status
+            );
         }
+
+        await response.json();
 
         product.title = updatedData.title;
         product.price = updatedData.price;
@@ -384,21 +385,19 @@ async function deleteProduct() {
         showLoading("Deleting product...");
         showError("");
 
-        if (!product.custom) {
-            await wait(FAKE_DELAY);
+        await wait(FAKE_DELAY);
 
-            const response = await fetch(`${API_URL}/${productId}`, {
-                method: "DELETE"
-            });
+        const response = await fetch(`${API_URL}/${DEMO_PRODUCT_ID}`, {
+            method: "DELETE"
+        });
 
-            if (!response.ok) {
-                throw new Error(
-                    "Could not delete product. Status: " + response.status
-                );
-            }
-
-            await response.json();
+        if (!response.ok) {
+            throw new Error(
+                "Could not delete product. Status: " + response.status
+            );
         }
+
+        await response.json();
 
         products = products.filter(function(item) {
             return item.id !== productId;

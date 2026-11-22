@@ -8,20 +8,21 @@
     <script src="catalog.js" defer></script>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="catalog.css">
+    <script src="shared.js" defer></script>
 </head>
 <body>
 
     <header class="site-header">
         <div class="site-header-inner">
             <a class="site-brand" href="catalog.html">Super Goods<span>The place with everything</span></a>
-            <nav class="site-nav" aria-label="Main navigation">
+            <button class="mobile-menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="main-navigation">&#9776;</button>
+            <nav id="main-navigation" class="site-nav" aria-label="Main navigation">
                 <a href="catalog.html" class="is-current" aria-current="page">Shop</a>
                 <button id="favorites-button" type="button">♡ <span>Favorites</span></button>
                 <a href="cart.html">Bag</a>
             </nav>
         </div>
     </header>
-    <div class="announcement">Complimentary delivery on orders over $100</div>
 
     <dialog id="add-product-dialog">
         <form id="add-product-form" method="dialog">

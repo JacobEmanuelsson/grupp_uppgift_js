@@ -6,6 +6,7 @@
     <title>Order complete - Super Goods</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="checkout.css">
+    <script src="shared.js" defer></script>
 </head>
 <body>
     <header class="site-header">
@@ -14,14 +15,14 @@
                 Super Goods
                 <span>The place with everything</span>
             </a>
-            <nav class="site-nav" aria-label="Main navigation">
+            <button class="mobile-menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="main-navigation">&#9776;</button>
+            <nav id="main-navigation" class="site-nav" aria-label="Main navigation">
                 <a href="catalog.html">Shop</a>
                 <a href="favorites.html">♡ <span>Favorites</span></a>
                 <a href="cart.html">Bag</a>
             </nav>
         </div>
     </header>
-    <div class="announcement">Complimentary delivery on orders over $100</div>
 
     <main id="main" class="page-container">
         <p id="no-order" role="status" hidden>

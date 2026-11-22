@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="detalj.css">
 
     <script src="detalj.js" defer></script>
+    <script src="shared.js" defer></script>
 </head>
 
 <body>
@@ -23,7 +24,8 @@
             <span>The place with everything</span>
         </a>
 
-        <nav class="site-nav" aria-label="Main navigation">
+        <button class="mobile-menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="main-navigation">&#9776;</button>
+        <nav id="main-navigation" class="site-nav" aria-label="Main navigation">
 
             <a href="catalog.html">
                 Shop
@@ -42,9 +44,6 @@
     </div>
 </header>
 
-<div class="announcement">
-    Complimentary delivery on orders over $100
-</div>
 
 
     <main class="detail-main">
