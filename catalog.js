@@ -134,8 +134,8 @@ async function addProductAPI(product) {
         }
 
         return await response.json();
-    } catch (error) {
-        console.error("Add failed:", error);
+    } catch {
+        // The form shows an error message when this returns null.
         return null;
     }
 }
@@ -207,8 +207,8 @@ async function fetchProducts() {
         }
 
         return productsWithFavorites;
-    } catch (error) {
-        console.error("Fetch failed:", error);
+    } catch {
+        // init shows an error message when this returns null.
         return null;
     }
 }
