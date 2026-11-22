@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order complete - Super Goods</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="checkout.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="site-header-inner">
+            <a class="site-brand" href="catalog.html">
+                Super Goods
+                <span>The place with everything</span>
+            </a>
+            <nav class="site-nav" aria-label="Main navigation">
+                <a href="catalog.html">Shop</a>
+                <a href="favorites.html">♡ <span>Favorites</span></a>
+                <a href="cart.html">Bag</a>
+            </nav>
+        </div>
+    </header>
+    <div class="announcement">Complimentary delivery on orders over $100</div>
+
+    <main id="main" class="page-container">
+        <p id="no-order" role="status" hidden>
+            There is no recent order to show. <a href="catalog.html">Go to the shop</a>
+        </p>
+
+        <div id="receipt-content" hidden>
+            <p class="order-banner" role="status">Your order is confirmed &bull; Thank you for choosing Super Goods</p>
+
+            <div class="receipt-hero">
+                <span class="receipt-check" aria-hidden="true">&#10003;</span>
+                <h1>A good choice.</h1>
+                <p class="receipt-tagline">Thank you for your purchase! Your order has been placed.</p>
+                <p id="order-meta" class="order-meta"></p>
+            </div>
+
+            <section class="receipt" aria-labelledby="receipt-title">
+                <h2 id="receipt-title">Order receipt</h2>
+                <ul id="receipt-items" class="receipt-items"></ul>
+                <p class="total-paid"><span>Total paid</span> <strong id="total-paid"></strong></p>
+            </section>
+
+            <p id="delivery" class="receipt-note"></p>
+
+            <p class="receipt-action">
+                <a class="primary-button" href="catalog.html">Continue browsing <span aria-hidden="true">→</span></a>
+            </p>
+        </div>
+    </main>
+
+    <footer class="site-footer"><p>&copy; 2026 Super Goods AB</p></footer>
+
+    <script src="cart-utils.js"></script>
+    <script src="order-complete.js"></script>
+</body>
+</html>
