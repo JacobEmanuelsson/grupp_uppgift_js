@@ -6,6 +6,7 @@
     <title>Your products - Super Goods</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="cart.css">
+    <script src="shared.js" defer></script>
 </head>
 <body>
     <header class="site-header">
@@ -14,14 +15,14 @@
                 Super Goods
                 <span>The place with everything</span>
             </a>
-            <nav class="site-nav" aria-label="Main navigation">
+            <button class="mobile-menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="main-navigation">&#9776;</button>
+            <nav id="main-navigation" class="site-nav" aria-label="Main navigation">
                 <a href="catalog.html">Shop</a>
                 <a href="favorites.html"><span aria-hidden="true">♡</span> <span>Favorites</span></a>
                 <a href="cart.html" class="is-current" aria-current="page">Bag</a>
             </nav>
         </div>
     </header>
-    <div class="announcement">Complimentary delivery on orders over $100</div>
 
     <main id="main" class="page-container">
         <h1>Your products</h1>
@@ -57,7 +58,7 @@
 
     <footer class="site-footer"><p>&copy; 2026 Super Goods AB</p></footer>
 
-    <script src="cart-utils.js"></script>
-    <script src="cart.js"></script>
+    <script src="cart-utils.js" defer></script>
+    <script src="cart.js" defer></script>
 </body>
 </html>

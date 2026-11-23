@@ -13,6 +13,7 @@ document.body.append(toast);
 
 function saveCart() {
     sessionStorage.setItem("cart", JSON.stringify(cartItems));
+    updateBagCount();
 }
 
 function isFavorite(id) {

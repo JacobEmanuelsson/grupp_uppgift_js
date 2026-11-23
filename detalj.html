@@ -1,57 +1,74 @@
+
 <!DOCTYPE html>
 <html lang="sv">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Product Details</title>
+    <title>Product Details – Super Goods</title>
 
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="detalj.css">
 
     <script src="detalj.js" defer></script>
+    <script src="shared.js" defer></script>
 </head>
 
 <body>
 
-    
-<header class="site-header">
-    <div class="site-header-inner">
+    <header class="site-header">
 
-        <a class="site-brand" href="catalog.html">
-            Super Goods
-            <span>The place with everything</span>
-        </a>
+        <div class="site-header-inner">
 
-        <nav class="site-nav" aria-label="Main navigation">
+            <a class="site-brand" href="catalog.html"
+               aria-label="Super Goods home">
 
-            <a href="catalog.html">
-                Shop
+                Super Goods
+                <span>The place with everything</span>
+
             </a>
 
-            <a href="favorites.html">
-                ♡ <span>Favorites</span>
-            </a>
+            <button
+                class="mobile-menu-toggle"
+                type="button"
+                aria-label="Open menu"
+                aria-expanded="false"
+                aria-controls="main-navigation">
 
-            <a href="cart.html">
-                Bag
-            </a>
+                <span aria-hidden="true">&#9776;</span>
 
-        </nav>
+            </button>
 
-    </div>
-</header>
+            <nav id="main-navigation"
+                 class="site-nav"
+                 aria-label="Main navigation">
 
-<div class="announcement">
-    Complimentary delivery on orders over $100
-</div>
+                <a href="catalog.html" aria-current="page">
+                    Shop
+                </a>
 
+                <a href="favorites.html">
+                    <span aria-hidden="true">♡</span>
+                    <span>Favorites</span>
+                </a>
+
+                <a href="cart.html">
+                    Bag
+                </a>
+
+            </nav>
+
+        </div>
+
+    </header>
 
     <main class="detail-main">
 
         <section class="catalog-hero detail-hero">
 
             <div class="hero-copy">
+
                 <p class="eyebrow">PRODUCT COLLECTION</p>
 
                 <h1>
@@ -65,15 +82,23 @@
 
             </div>
 
-            <div class="hero-image-field"></div>
+            <div class="hero-image-field" aria-hidden="true"></div>
 
         </section>
 
-        <p id="loadingMessage" class="status-message"
-           role="status" aria-live="polite" hidden></p>
+        <p
+            id="loadingMessage"
+            class="status-message"
+            role="status"
+            aria-live="polite"
+            hidden>
+        </p>
 
-        <p id="errorMessage" class="error-message"
-           role="alert"></p>
+        <p
+            id="errorMessage"
+            class="error-message"
+            role="alert">
+        </p>
 
         <section
             id="productContainer"

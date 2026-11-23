@@ -10,10 +10,6 @@ let filteredProducts = [];
 
 const productContainer = document.getElementById("product-container")
 const searchForm = document.getElementById("search-form");
-const minPriceInput = document.getElementById("min-price");
-const maxPriceInput = document.getElementById("max-price");
-const priceLabel = document.getElementById("price-label");
-const priceSlider = document.getElementById("price-slider");
 const pageNavigation = document.getElementById("page-navigation");
 const favoritesButton = document.getElementById("favorites-button");
 const catalogMessage = document.getElementById("catalog-message");
@@ -75,7 +71,10 @@ async function addProduct(event) {
     submitAddProductButton.disabled = true;
     cancelAddProductButton.disabled = true;
 
-    const newProduct = await addProductAPI(Object.fromEntries(formData));
+    const productData = Object.fromEntries(formData);
+    productData.price = Number(productData.price);
+
+    const newProduct = await addProductAPI(productData);
 
     submitAddProductButton.disabled = false;
     cancelAddProductButton.disabled = false;
@@ -90,22 +89,26 @@ async function addProduct(event) {
 
     // The API gives every new product the same id, so we make our own.
     // Use the highest existing ID plus one, or 1 if the array is empty.
-    const ids = products.map((product) => product.id);
-    const newId = Math.max(0, ...ids) + 1;
+    let highestId = 0;
+
+    for (const product of products) {
+        if (product.id > highestId) {
+            highestId = product.id;
+        }
+    }
+
+    const newId = highestId + 1;
 
     products.unshift({
         ...newProduct,
         id: newId,
-        price: Number(newProduct.price), // form values are always text
         rating: 0,
         availabilityStatus: "In Stock",
-        favorite: false,
-        custom: true // marks products added by the user
+        favorite: false
     });
 
     saveProducts();
     populateFilter();
-    updatePriceSlider();
     applyFilters();
 
     addProductForm.reset();
@@ -131,8 +134,8 @@ async function addProductAPI(product) {
         }
 
         return await response.json();
-    } catch (error) {
-        console.error("Add failed:", error);
+    } catch {
+        // The form shows an error message when this returns null.
         return null;
     }
 }
@@ -141,7 +144,7 @@ async function init() {
     products = loadProducts();
 
     // Fetch only when there is no saved catalog.
-    // Saved products already contain favorites and our custom products.
+    // Saved products already contain favorites and products we added.
     if (products === null) {
         products = [];
         showCatalogMessage("Loading products...");
@@ -158,9 +161,6 @@ async function init() {
     }
 
     populateFilter();
-    if (products.length > 0) {
-        createPriceSlider();
-    }
     applyFilters();
 }
 
@@ -196,18 +196,21 @@ async function fetchProducts() {
 
         const data = await response.json();
 
-        // Give every product a favorite boolean, false from the start
-        return data.products.map((product) => ({ ...product, favorite: false }));
-    } catch (error) {
-        console.error("Fetch failed:", error);
+        // Give every product a favorite boolean, false from the start.
+        const productsWithFavorites = [];
+
+        for (const product of data.products) {
+            productsWithFavorites.push({
+                ...product,
+                favorite: false
+            });
+        }
+
+        return productsWithFavorites;
+    } catch {
+        // init shows an error message when this returns null.
         return null;
     }
-}
-
-// Treat new products (rating 0) and missing or invalid scores as unrated.
-function getProductRating(product) {
-    const rating = Number(product.rating);
-    return Number.isFinite(rating) && rating > 0 && rating <= 5 ? rating : null;
 }
 
 function renderProducts(productsToRender) {
@@ -242,8 +245,8 @@ function renderProducts(productsToRender) {
         card.querySelector(".product-title").textContent = product.title;
         card.querySelector(".product-description").textContent = product.description;
         const ratingElement = card.querySelector(".product-rating");
-        const rating = getProductRating(product);
-        if (rating === null) {
+        const rating = product.rating;
+        if (rating === 0) {
             ratingElement.textContent = "Not yet rated";
             ratingElement.classList.add("is-unrated");
         } else {
@@ -296,7 +299,11 @@ function populateFilter() {
 
     // Remember what the user has selected, so it is kept when the options are rebuilt
     const selects = [selectCategory, selectAvailability];
-    const selectedValues = selects.map((select) => select.value);
+    const selectedValues = [];
+
+    for (const select of selects) {
+        selectedValues.push(select.value);
+    }
 
     for (const product of products) {
         categories.add(product.category)
@@ -328,56 +335,18 @@ function populateFilter() {
     });
 }
 
-// Find the lowest and highest price so the slider covers all products
-function getPriceRange() {
-    const prices = products.map((product) => product.price);
-    if (prices.length === 0) return { min: 0, max: 1 };
-
-    return {
-        min: Math.floor(Math.min(...prices)),
-        max: Math.max(Math.floor(Math.min(...prices)) + 1, Math.ceil(Math.max(...prices)))
-    };
-}
-
-// Create the price slider with noUiSlider (loaded in catalog.html). Only run once.
-function createPriceSlider() {
-    const range = getPriceRange();
-
-    noUiSlider.create(priceSlider, {
-        start: [range.min, range.max], // where the two handles start
-        connect: true,                 // color the bar between the handles
-        step: 1,                       // move in whole numbers
-        range: range
-    });
-
-    // Runs when the slider is created and every time a handle moves.
-    // Copies the values to the hidden inputs (for FormData) and updates the label.
-    priceSlider.noUiSlider.on("update", (values) => {
-        minPriceInput.value = Math.round(values[0]);
-        maxPriceInput.value = Math.round(values[1]);
-        priceLabel.textContent = `$${minPriceInput.value} - $${maxPriceInput.value}`;
-    });
-}
-
-// Update the existing slider to the new price range (noUiSlider.create can't be run twice).
-// The handles are moved to the ends so the new products are included.
-function updatePriceSlider() {
-    const range = getPriceRange();
-
-    if (!priceSlider.noUiSlider) {
-        createPriceSlider();
-        return;
-    }
-    priceSlider.noUiSlider.updateOptions({
-        start: [range.min, range.max],
-        range: range
-    });
-}
-
 // Slice after filtering and sorting so page boundaries stay consistent.
 function renderPage() {
     const pageCount = Math.ceil(filteredProducts.length / PAGE_SIZE);
-    currentPage = Math.max(1, Math.min(currentPage, pageCount || 1));
+    if (pageCount === 0) {
+        currentPage = 1;
+    } else if (currentPage > pageCount) {
+        currentPage = pageCount;
+    }
+
+    if (currentPage < 1) {
+        currentPage = 1;
+    }
     const start = (currentPage - 1) * PAGE_SIZE;
     renderProducts(filteredProducts.slice(start, start + PAGE_SIZE));
     const first = filteredProducts.length ? start + 1 : 0;
@@ -388,16 +357,10 @@ function renderPage() {
     pageNavigation.hidden = pageCount <= 1;
     pageNavigation.classList.toggle("is-hidden", pageCount <= 1);
 
-    function addPageButton(text, page, disabled = false) {
+    function addPageButton(text, page) {
         const button = document.createElement("button");
         button.type = "button";
         button.textContent = text;
-        button.disabled = disabled;
-        if (page === currentPage && text === String(page)) {
-            button.classList.add("is-current");
-            button.setAttribute("aria-current", "page");
-        }
-        button.setAttribute("aria-label", text === String(page) ? `Page ${page}` : text);
         button.addEventListener("click", () => {
             currentPage = page;
             renderPage();
@@ -405,11 +368,24 @@ function renderPage() {
             pageNavigation.querySelector(".is-current")?.focus({ preventScroll: true });
         });
         pageNavigation.append(button);
+        return button;
     }
 
-    addPageButton("Previous", currentPage - 1, currentPage === 1);
-    for (let page = 1; page <= pageCount; page++) addPageButton(String(page), page);
-    addPageButton("Next", currentPage + 1, currentPage === pageCount);
+    const previousButton = addPageButton("Previous", currentPage - 1);
+    previousButton.disabled = currentPage === 1;
+
+    for (let page = 1; page <= pageCount; page++) {
+        const pageButton = addPageButton(String(page), page);
+        pageButton.setAttribute("aria-label", `Page ${page}`);
+
+        if (page === currentPage) {
+            pageButton.classList.add("is-current");
+            pageButton.setAttribute("aria-current", "page");
+        }
+    }
+
+    const nextButton = addPageButton("Next", currentPage + 1);
+    nextButton.disabled = currentPage >= pageCount;
 }
 
 // Filter and sort the products with the values from the search form, then show them
@@ -419,8 +395,6 @@ function applyFilters() {
     const category = formData.get("filter-category");
     const rating = formData.get("filter-rating");
     const availability = formData.get("filter-availability");
-    const minPrice = formData.get("min-price");
-    const maxPrice = formData.get("max-price");
     const sort = formData.get("sort-product");
 
     filteredProducts = products.filter((product) => {
@@ -432,20 +406,11 @@ function applyFilters() {
             return false;
         }
 
-        const productRating = getProductRating(product);
-        if (rating !== "" && (productRating === null || productRating < Number(rating))) {
+        if (rating !== "" && product.rating < Number(rating)) {
             return false;
         }
 
         if (availability !== "" && product.availabilityStatus !== availability) {
-            return false;
-        }
-
-        if (minPrice !== "" && product.price < Number(minPrice)) {
-            return false;
-        }
-
-        if (maxPrice !== "" && product.price > Number(maxPrice)) {
             return false;
         }
 
@@ -473,8 +438,5 @@ searchForm.addEventListener("submit", (event) => {
     event.preventDefault();
     applyFilters();
 });
-
-// Rating changes apply immediately and return to the first matching page.
-document.getElementById("filter-rating").addEventListener("change", applyFilters);
 
 init()

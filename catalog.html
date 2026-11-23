@@ -4,27 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shop the collection — Field / Form</title>
-    <!-- noUiSlider: library for the price slider with two handles (CSS + JS from CDN) -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nouislider@15.7.1/dist/nouislider.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/nouislider@15.7.1/dist/nouislider.min.js"></script>
 
     <script src="catalog.js" defer></script>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="catalog.css">
+    <script src="shared.js" defer></script>
 </head>
 <body>
 
     <header class="site-header">
         <div class="site-header-inner">
             <a class="site-brand" href="catalog.html">Super Goods<span>The place with everything</span></a>
-            <nav class="site-nav" aria-label="Main navigation">
+            <button class="mobile-menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="main-navigation">&#9776;</button>
+            <nav id="main-navigation" class="site-nav" aria-label="Main navigation">
                 <a href="catalog.html" class="is-current" aria-current="page">Shop</a>
                 <button id="favorites-button" type="button">♡ <span>Favorites</span></button>
                 <a href="cart.html">Bag</a>
             </nav>
         </div>
     </header>
-    <div class="announcement">Complimentary delivery on orders over $100</div>
 
     <dialog id="add-product-dialog">
         <form id="add-product-form" method="dialog">
@@ -105,15 +103,6 @@
 
             </select></label>
 
-            <div id="price-range">
-                <span>Price</span>
-                <span id="price-label"></span>
-                <!-- noUiSlider builds the slider inside this empty div -->
-                <div id="price-slider"></div>
-                <!-- Hidden inputs that hold the slider values so FormData can read them -->
-                <input type="hidden" name="min-price" id="min-price">
-                <input type="hidden" name="max-price" id="max-price">
-            </div>
 
             <label class="sort-field">Sort by
             <select class="form-control" name="sort-product" id="sort-product">

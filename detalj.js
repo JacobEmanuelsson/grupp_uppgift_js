@@ -1,4 +1,6 @@
 const API_URL = "https://dummyjson.com/products";
+
+const DEMO_PRODUCT_ID = 1;
 const FAKE_DELAY = 1500;
 
 function wait(ms) {
@@ -15,7 +17,6 @@ const productId = Number(params.get("id"));
 const productContainer = document.querySelector("#productContainer");
 const loadingMessage = document.querySelector("#loadingMessage");
 const errorMessage = document.querySelector("#errorMessage");
-const backButton = document.querySelector("#backButton");
 
 let product = products.find(function(item) {
     return item.id === productId;
@@ -28,6 +29,7 @@ function saveProducts() {
 function showLoading(text) {
     loadingMessage.textContent = text;
     loadingMessage.hidden = text === "";
+    productContainer.setAttribute("aria-busy", String(text !== ""));
 }
 
 function showError(text) {
@@ -61,7 +63,7 @@ function renderProduct() {
 
             <p class="product-category"></p>
 
-            <h2 class="product-title"></h2>
+            <h2 class="product-title" tabindex="-1"></h2>
 
             <p class="product-description"></p>
 
@@ -73,21 +75,22 @@ function renderProduct() {
 
             <div class="product-actions">
 
-                <button id="addToCartButton" class="primary-button">
+                <button type="button" id="addToCartButton" class="primary-button">
                     Add to cart
                 </button>
 
                 <p id="cartMessage" class="action-message"
                    role="status" aria-live="polite"></p>
 
-                <button id="addToFavoriteButton" class="secondary-button">
+                <button type="button" id="addToFavoriteButton" class="secondary-button"
+                        aria-pressed="false">
                     Add to favorites
                 </button>
 
                 <p id="favoriteMessage" class="action-message"
                    role="status" aria-live="polite"></p>
 
-                <button id="editProductButton" class="secondary-button">
+                <button type="button" id="editProductButton" class="secondary-button">
                     Edit product
                 </button>
 
@@ -139,9 +142,12 @@ function renderProduct() {
                     Delete product
                 </button>
 
-                <div id="deleteConfirmation" class="delete-confirmation" hidden>
+                <div id="deleteConfirmation" class="delete-confirmation"
+                     role="group" aria-labelledby="deleteConfirmationText" hidden>
 
-                    <p>Are you sure you want to delete this product?</p>
+                    <p id="deleteConfirmationText">
+                        Are you sure you want to delete this product?
+                    </p>
 
                     <button type="button" id="confirmDeleteButton">
                         Confirm delete
@@ -154,7 +160,7 @@ function renderProduct() {
                 </div>
 
                 <p id="deleteMessage" class="action-message"
-                   role="status" aria-live="polite"></p>
+                   role="status" aria-live="polite" tabindex="-1"></p>
 
             </div>
 
@@ -222,6 +228,8 @@ function updateFavoriteButton() {
         return;
     }
 
+    favoriteButton.setAttribute("aria-pressed", String(product.favorite));
+
     if (product.favorite) {
         favoriteButton.textContent = "♥ Remove from favorites";
     } else {
@@ -265,10 +273,10 @@ function addToCart() {
     }
 
     sessionStorage.setItem("cart", JSON.stringify(cart));
+    updateBagCount();
 
     showActionMessage("cartMessage", "Product added to cart!");
 }
-
 function showEditForm() {
     const editForm = productContainer.querySelector("#editProductForm");
 
@@ -279,12 +287,14 @@ function showEditForm() {
     productContainer.querySelector("#editStock").value = product.stock ?? 0;
 
     editForm.hidden = false;
+    productContainer.querySelector("#editTitle").focus();
 }
 
 function hideEditForm() {
     const editForm = productContainer.querySelector("#editProductForm");
 
     editForm.hidden = true;
+    productContainer.querySelector("#editProductButton").focus();
 }
 
 async function updateProduct(event) {
@@ -315,42 +325,48 @@ async function updateProduct(event) {
         return;
     }
 
-
     try {
         showLoading("Updating product...");
         showError("");
 
-        if (!product.custom) {
-            await wait(FAKE_DELAY);
+        await wait(FAKE_DELAY);
 
-            const response = await fetch(`${API_URL}/${productId}`, {
-                method: "PATCH",
+        const response = await fetch(`${API_URL}/${DEMO_PRODUCT_ID}`, {
+            method: "PATCH",
 
-                headers: {
-                    "Content-Type": "application/json"
-                },
+            headers: {
+                "Content-Type": "application/json"
+            },
 
-                body: JSON.stringify(updatedData)
-            });
+            body: JSON.stringify(updatedData)
+        });
 
-            if (!response.ok) {
-                throw new Error(
-                    "Could not update product. Status: " + response.status
-                );
-            }
-
-            await response.json();
+        if (!response.ok) {
+            throw new Error(
+                "Could not update product. Status: " + response.status
+            );
         }
 
-        product.title = updatedData.title;
-        product.price = updatedData.price;
-        product.category = updatedData.category;
-        product.description = updatedData.description;
-        product.stock = updatedData.stock;
+        // Använd svaret från API:et innan den lokala produkten ändras.
+        const updatedProduct = await response.json();
+
+        if (!updatedProduct || updatedProduct.id !== DEMO_PRODUCT_ID) {
+            throw new Error("The API returned an invalid product response.");
+        }
+
+        // Uppdatera den lokala produkten med värdena från API-svaret.
+        product.title = updatedProduct.title ?? product.title;
+        product.price = Number(updatedProduct.price ?? product.price);
+        product.category = updatedProduct.category ?? product.category;
+        product.description = updatedProduct.description ?? product.description;
+        product.stock = updatedProduct.stock ?? product.stock;
 
         saveProducts();
 
         renderProduct();
+
+        // Flytta fokus till produktens rubrik efter att sidan har uppdaterats.
+        productContainer.querySelector(".product-title").focus();
 
         showActionMessage(
             "editMessage",
@@ -370,6 +386,7 @@ function showDeleteConfirmation() {
         productContainer.querySelector("#deleteConfirmation");
 
     confirmation.hidden = false;
+    productContainer.querySelector("#confirmDeleteButton").focus();
 }
 
 function hideDeleteConfirmation() {
@@ -377,6 +394,7 @@ function hideDeleteConfirmation() {
         productContainer.querySelector("#deleteConfirmation");
 
     confirmation.hidden = true;
+    productContainer.querySelector("#deleteProductButton").focus();
 }
 
 async function deleteProduct() {
@@ -384,20 +402,27 @@ async function deleteProduct() {
         showLoading("Deleting product...");
         showError("");
 
-        if (!product.custom) {
-            await wait(FAKE_DELAY);
+        await wait(FAKE_DELAY);
 
-            const response = await fetch(`${API_URL}/${productId}`, {
-                method: "DELETE"
-            });
+        const response = await fetch(`${API_URL}/${DEMO_PRODUCT_ID}`, {
+            method: "DELETE"
+        });
 
-            if (!response.ok) {
-                throw new Error(
-                    "Could not delete product. Status: " + response.status
-                );
-            }
+        if (!response.ok) {
+            throw new Error(
+                "Could not delete product. Status: " + response.status
+            );
+        }
 
-            await response.json();
+        // Läs och kontrollera API-svaret innan produkten tas bort lokalt.
+        const deletedProduct = await response.json();
+
+        if (
+            !deletedProduct ||
+            deletedProduct.id !== DEMO_PRODUCT_ID ||
+            deletedProduct.isDeleted !== true
+        ) {
+            throw new Error("The API did not confirm that the product was deleted.");
         }
 
         products = products.filter(function(item) {
@@ -423,6 +448,7 @@ async function deleteProduct() {
         editForm.hidden = true;
 
         product = null;
+        productContainer.querySelector("#deleteMessage").focus();
 
     } catch (error) {
         showActionMessage("deleteMessage", error.message);
@@ -431,6 +457,5 @@ async function deleteProduct() {
         showLoading("");
     }
 }
-
 
 renderProduct();
