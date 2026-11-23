@@ -27,6 +27,7 @@ function saveProducts() {
 }
 
 function showLoading(text) {
+    setLoading(text !== "", "detail-loader");
     loadingMessage.textContent = text;
     loadingMessage.hidden = text === "";
     productContainer.setAttribute("aria-busy", String(text !== ""));

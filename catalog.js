@@ -74,7 +74,9 @@ async function addProduct(event) {
     const productData = Object.fromEntries(formData);
     productData.price = Number(productData.price);
 
+    setLoading(true, "add-product-loader");
     const newProduct = await addProductAPI(productData);
+    setLoading(false, "add-product-loader");
 
     submitAddProductButton.disabled = false;
     cancelAddProductButton.disabled = false;
@@ -148,9 +150,11 @@ async function init() {
     if (products === null) {
         products = [];
         showCatalogMessage("Loading products...");
+        setLoading(true, "catalog-loader");
 
         // Load all products so filtering and sorting work across every page.
         const apiProducts = await fetchProducts();
+        setLoading(false, "catalog-loader");
         if (apiProducts === null) {
             showCatalogMessage("Could not load products. Please reload the page.");
             return;

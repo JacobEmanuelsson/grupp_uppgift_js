@@ -57,3 +57,13 @@ function updateBagCount() {
 
 window.addEventListener('pageshow', updateBagCount);
 updateBagCount();
+
+//Loader
+
+function setLoading(isLoading, loaderId) {
+    const loader = document.getElementById(loaderId);
+
+    if (loader) {
+        loader.hidden = !isLoading;
+    }
+}
