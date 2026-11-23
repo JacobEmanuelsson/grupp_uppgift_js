@@ -359,7 +359,6 @@ function renderPage() {
         `${first}-${last} of ${filteredProducts.length} products`;
     pageNavigation.replaceChildren();
     pageNavigation.hidden = pageCount <= 1;
-    pageNavigation.classList.toggle("is-hidden", pageCount <= 1);
 
     function addPageButton(text, page) {
         const button = document.createElement("button");

@@ -366,6 +366,10 @@ h2 {
     margin-top: 36px;
 }
 
+.page-navigation[hidden] {
+    display: none;
+}
+
 .page-navigation button {
     min-width: 38px;
     min-height: 40px;

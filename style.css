@@ -54,9 +54,6 @@ button:disabled {
     outline-offset: 4px;
 }
 
-.is-hidden {
-    display: none !important;
-}
 
 
 /* Shared page width: add page-container to your main element. */
