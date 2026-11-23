@@ -175,10 +175,19 @@ cartList.addEventListener("click", function (event) {
     saveCart();
     render();
 
-    if (action !== "remove") {
+    if (action === "remove") {
+        const nextButton = cartList.querySelector('[data-action="remove"]');
+
+        if (nextButton) {
+            nextButton.focus();
+        } else {
+            cartMessage.focus();
+        }
+    } else {
         const sameButton = cartList.querySelector(
             '[data-id="' + id + '"] [data-action="' + action + '"]'
         );
+
         if (sameButton) {
             sameButton.focus();
         }
