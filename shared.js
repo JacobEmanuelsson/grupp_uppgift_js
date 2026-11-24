@@ -36,13 +36,7 @@ bagBadge.setAttribute('aria-hidden', 'true');
 bagLink.append(' ', bagBadge);
 
 function updateBagCount() {
-    let cart = [];
-
-    try {
-        cart = JSON.parse(sessionStorage.getItem('cart')) || [];
-    } catch (error) {
-        cart = [];
-    }
+    const cart = JSON.parse(sessionStorage.getItem('cart')) || [];
 
     let count = 0;
 
