@@ -19,6 +19,22 @@ function wait(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+// Show a random product image, then pick another one after three seconds.
+function startCarousel() {
+    const image = document.getElementById("hero-product-image");
+
+    function showNextImage() {
+        if (products.length === 0) return;
+
+        const index = Math.floor(Math.random() * products.length);
+        image.src = products[index].thumbnail;
+        image.hidden = false;
+        setTimeout(showNextImage, 3000);
+    }
+
+    showNextImage();
+}
+
 // Show a message under the products, or hide it if the text is empty
 function showCatalogMessage(text) {
     catalogMessage.textContent = text;
@@ -166,6 +182,7 @@ async function init() {
 
     populateFilter();
     applyFilters();
+    startCarousel();
 }
 
 // Save the products array in sessionStorage (it can only store text, so we use JSON)
